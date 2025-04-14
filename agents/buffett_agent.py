@@ -13,13 +13,14 @@ def evaluate_stock(ticker):
         info = stock.info
         
         pe = info.get('trailingPE', float('inf'))
-        debt_to_equity = info.get('debtToEquity', float('inf'))
-        free_cash_flow = info.get('freeCashflow', 0)
+        debt_to_equity = info.get('debtToEquity', 999) / 100  
+        free_cash_flow = info.get('freeCashflow', 0) * 4  
         market_cap = info.get('marketCap', float('inf'))
         
-        fcf_yield = (free_cash_flow / market_cap) if market_cap else 0
+        fcf_yield = free_cash_flow / market_cap if market_cap else 0
         
-        if pe < 25 and debt_to_equity < 0.5 and fcf_yield > 0.03:
+
+        if pe < 30 and debt_to_equity < 0.6 and fcf_yield > 0.025:  
             return "BUY"
         return "HOLD"
     except Exception as e:
